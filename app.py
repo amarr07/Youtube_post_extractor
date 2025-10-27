@@ -14,7 +14,9 @@ import io
 import os
 
 # YouTube Data API v3 Configuration
-API_KEY = os.getenv("YOUTUBE_API_KEY", "")  # Get API key from environment variable
+# For local development, you can set the API key here temporarily
+# For production, use environment variable: export YOUTUBE_API_KEY="your_key"
+API_KEY = os.getenv("YOUTUBE_API_KEY", "AIzaSyAlLmlrgHk8w93LOS-H8aAlT_DEE3E9axQ")
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
@@ -264,6 +266,11 @@ def main():
         page_icon="🎥",
         layout="wide"
     )
+    
+    # Check API key
+    if not API_KEY or API_KEY == "":
+        st.error("⚠️ YouTube API Key is not configured! Please set the YOUTUBE_API_KEY environment variable.")
+        st.stop()
     
     # Title and description
     st.title("🎥 YouTube Data Extractor")
