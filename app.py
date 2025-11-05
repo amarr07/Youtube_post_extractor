@@ -12,11 +12,19 @@ import openpyxl
 from typing import List, Dict, Any
 import io
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (for local development)
+load_dotenv()
 
 # YouTube Data API v3 Configuration
-# For local development, you can set the API key here temporarily
-# For production, use environment variable: export YOUTUBE_API_KEY="your_key"
-API_KEY = os.getenv("YOUTUBE_API_KEY", "AIzaSyAlLmlrgHk8w93LOS-H8aAlT_DEE3E9axQ")
+# Try to get API key from Streamlit secrets first (for cloud deployment),
+# then fall back to environment variable (for local development)
+try:
+    API_KEY = st.secrets.get("YOUTUBE_API_KEY")
+except (FileNotFoundError, KeyError):
+    API_KEY = os.getenv("YOUTUBE_API_KEY")
+
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 

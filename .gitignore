@@ -37,6 +37,9 @@ wheels/
 .env
 .env.local
 
+# Streamlit secrets
+.streamlit/secrets.toml
+
 # Output files
 *.xlsx
 youtube_data.xlsx

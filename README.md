@@ -44,15 +44,21 @@ A powerful web application built with Streamlit that extracts video data from Yo
 
 4. **Set up your API key**
    
-   Create a `.env` file in the project root or set an environment variable:
+   **For Local Development:**
+   
+   Copy the `.env.example` file to `.env`:
    ```bash
-   export YOUTUBE_API_KEY="your_api_key_here"
+   cp .env.example .env
    ```
    
-   Or on Windows:
-   ```cmd
-   set YOUTUBE_API_KEY=your_api_key_here
+   Then edit `.env` and add your YouTube API key:
    ```
+   YOUTUBE_API_KEY=your_actual_api_key_here
+   ```
+   
+   **For Streamlit Cloud Deployment:**
+   
+   The API key will be configured through Streamlit Cloud's secrets management (see deployment section below).
 
 ### Running the App
 
@@ -147,6 +153,47 @@ Youtube_extractor_streamlit/
 - `openpyxl>=3.1.0` - Excel file generation
 - `python-dateutil>=2.8.2` - Date parsing utilities
 
+## 🚢 Deployment to Streamlit Cloud
+
+### Prerequisites
+- GitHub account
+- YouTube Data API v3 key
+
+### Step-by-Step Deployment
+
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+2. **Go to Streamlit Cloud**
+   - Visit [share.streamlit.io](https://share.streamlit.io)
+   - Sign in with your GitHub account
+
+3. **Deploy your app**
+   - Click "New app"
+   - Select your repository: `amarr07/Youtube_post_extractor`
+   - Set main file path: `app.py`
+   - Click "Advanced settings"
+
+4. **Configure Secrets**
+   - In the "Secrets" section, add:
+   ```toml
+   YOUTUBE_API_KEY = "your_actual_youtube_api_key_here"
+   ```
+   - Click "Save"
+
+5. **Deploy**
+   - Click "Deploy!"
+   - Wait for the app to build and deploy
+   - Your app will be available at: `https://your-app-name.streamlit.app`
+
+### 🔄 Updating Your Deployment
+
+After pushing changes to GitHub, Streamlit Cloud will automatically redeploy your app.
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -163,10 +210,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ⚠️ Important Notes
 
-- **API Key Security**: Never commit your API key to version control
+- **API Key Security**: 
+  - Never commit your `.env` file or API keys to version control
+  - The `.gitignore` file is configured to exclude sensitive files
+  - For Streamlit Cloud, use the secrets management feature
 - **Quota Management**: Be mindful of API quota limits when extracting large amounts of data
 - **Rate Limiting**: The API may rate limit requests if too many are made too quickly
 - **Data Privacy**: Respect YouTube's Terms of Service and data privacy guidelines
+- **Local vs Cloud**: The app automatically detects whether it's running locally or on Streamlit Cloud
 
 ## 🐛 Troubleshooting
 
